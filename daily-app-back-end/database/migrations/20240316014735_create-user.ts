@@ -7,8 +7,6 @@ export async function up(knex: Knex): Promise<void> {
     table.text('name').notNullable()
     table.text('email').notNullable()
     table.text('password').notNullable()
-    table.uuid('refs_id').notNullable()
-    table.uuid('diet_id').notNullable()
     table.decimal('accept_rate')
   })
 }
