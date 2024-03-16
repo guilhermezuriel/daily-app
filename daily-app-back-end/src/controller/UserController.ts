@@ -8,10 +8,8 @@ const UserController = {
         name: z.string(),
         email: z.string().refine((email)=>/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g.test(email?? ""), 'Invalid email'),
         password: z.string().refine((password)=>/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$"/g.test(password??''), 'Password must have minimum eight characters, at least one letter,one number and special character'),
-
       })
-      const user = req.body;
-
+      const {name, email, password} = createUserBodySchema.parse(req.body);
     }catch(err){
       console.log('createUserContoller >>>', err)
     }
