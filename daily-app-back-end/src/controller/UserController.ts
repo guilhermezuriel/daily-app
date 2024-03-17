@@ -19,11 +19,31 @@ const UserController = {
         password,
         accept_rate: null
       })
-      return res.status(201).send(user)
+      return res.status(201).send({user})
     }catch(err){
       console.log('createUserContoller >>>', err)
     }
   },
+   async getUserController(req:Request, res:Response){
+     try{  
+         const getUserParamsSchema =  z.object({
+           id: z.string().uuid()
+       })
+      const {id} = getUserParamsSchema.parse(req.params);
+      const user = await kknex('users').where('id', id).select('*')
+      return res.status(200).send(user)
+    }catch(err){
+     console.log('getUserController >>>> ', err)
+    }
+ },
+  async listAllUsersController(req:Request, res:Response){
+    try{
+      const user = await kknex('users').select('*')
+      return res.send(user)
+    }catch(err){
+      console.log(err)
+    }
+  }
 
 }
 
