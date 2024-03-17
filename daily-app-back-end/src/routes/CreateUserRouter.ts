@@ -1,9 +1,12 @@
-import { Router, Request, Response, request } from "express";
+import { Router } from "express";
+import {checkSessionIdExists} from '../middleware/checkSessionIdExitst'
 
 import UserController from '../controller/UserController'
 
 const route = Router();
 
-route.post('/', UserController.createUserController);
+route.post('/create', UserController.createUserController);
+// route.get('/login/:id', UserController.getUserController);
+route.get('/:id', UserController.getUserController);
 
 export default route;
