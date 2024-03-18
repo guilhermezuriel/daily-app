@@ -6,6 +6,7 @@ import { BadRequestError } from "../helpers/api-errors";
 import { User } from "../models/User.model";
 import bcrypt from 'bcrypt';
 import { validateCreation } from "../helpers/validate-creation";
+import jwt from 'jsonwebtoken';
 
 const UserController = {
   async createUserController(req: Request, res: Response) {
@@ -28,12 +29,23 @@ const UserController = {
         id: randomUUID(),
         name,
         email,
-        passwordHash,
+        password: passwordHash,
         accept_rate: null
       })
       return res.status(201).send({ newUser })
     } catch (err) {
       console.log('createUserContoller >>>', err)
+    }
+  },
+  async loginUserController(req: Request, res: Response) {
+    try {
+      const { email, password } = req.body;
+      const user: any = await kknex('users').where('email', email).select('*');
+      if (!user) return new BadRequestError('Email ou senha inválidos');
+      const verifyPassword = await bcrypt.compare(password, user.password);
+      if (!verifyPassword) return new BadRequestError('Email ou senha inválidos')
+    } catch (err) {
+      console.log('loginUserController >>>', err)
     }
   },
   async getUserController(req: Request, res: Response) {
