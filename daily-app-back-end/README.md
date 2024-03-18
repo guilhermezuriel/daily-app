@@ -1,6 +1,12 @@
 ### Deve ser possível criar um usuário [ X ]
 
 ### Dever ser possível identificar o usuário entre as requisições [ ]
+- Criar sessionId após realizar o login
+- Expira em 5 dias
+- SessionId necessário para realizar CRUD nas refeições -> Confirmar que o usuário esteja logado
+- Acrescentar no banco de dados das refs o id do user
+- Autentificação com JWT
+- Finalizar rota POST user/login/:id
 
 ### Deve ser possível registrar uma refeição feita[ ] :
 
