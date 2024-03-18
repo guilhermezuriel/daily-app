@@ -1,7 +1,7 @@
 ### Deve ser possível criar um usuário [ X ]
 
 ### Dever ser possível identificar o usuário entre as requisições [ ]
-- Criar sessionId após realizar o login
+- Criar token após realizar o login
 - Expira em 5 dias
 - SessionId necessário para realizar CRUD nas refeições -> Confirmar que o usuário esteja logado
 - Acrescentar no banco de dados das refs o id do user
