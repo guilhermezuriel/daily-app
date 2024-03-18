@@ -3,28 +3,35 @@ import { z } from 'zod'
 import { kknex } from "../database";
 import { randomUUID } from 'node:crypto';
 import { BadRequestError } from "../helpers/api-errors";
+import { User } from "../models/User.model";
+import bcrypt from 'bcrypt';
+import { validateCreation } from "../helpers/validate-creation";
 
 const UserController = {
   async createUserController(req: Request, res: Response) {
     try {
-      const createUserBodySchema = z.object({
+      /* const createUserBodySchema = z.object({
         name: z.string(),
         email: z.string().refine((email) => /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email ?? ""), 'Invalid email'),
         password: z.string().refine((password) => /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/.test(password ?? ''), 'Password must have minimum eight characters, at least one uppercase,one lower case, one number and special character'),
-      })
-      const { name, email, password } = createUserBodySchema.parse(req.body);
+      }) */
+      const { name, email, password }: User = req.body;
+      validateCreation('email', email);
+      validateCreation('password', email);
       const UserExists = await kknex('users').where('email', email).select('*');
       if (UserExists) {
         return new BadRequestError('O Email já está cadastrado');
       }
-      const user = await kknex('users').insert({
+      //Utilizar bcrypt ou criar algoritmo de hash com node:crypto ? :: Criar algoritmo com node:crypto
+      const passwordHash = await bcrypt.hash(password, 10);
+      const newUser = await kknex('users').insert({
         id: randomUUID(),
         name,
         email,
-        password,
+        passwordHash,
         accept_rate: null
       })
-      return res.status(201).send({ user })
+      return res.status(201).send({ newUser })
     } catch (err) {
       console.log('createUserContoller >>>', err)
     }
