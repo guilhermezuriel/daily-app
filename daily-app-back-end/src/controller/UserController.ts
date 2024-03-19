@@ -58,8 +58,17 @@ const UserController = {
     }catch(err){
       console.log('deleteUserController >>>>', err)
     }
+  },
+  //Need to test
+  async listAllUserRefs(req: Request, res: Response){
+    try{
+      const user = req.user;
+      const refs = await kknex('refs').where('user_id', user.id).select('*');
+      return res.send(refs)
+    }catch(err){
+      console.log('listAllUserRefs >>>>>', err)
+    }
   }
-
 }
 
 export default UserController
