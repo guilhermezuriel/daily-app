@@ -7,6 +7,7 @@ export async function up(knex: Knex): Promise<void> {
     table.uuid('user_id') 
     table.text('name')
     table.enu('type', ['breakfast','lunch','dinner','snack'])
+    table.boolean('is_Diet')
     table.timestamp('created_at')
   })
 }
