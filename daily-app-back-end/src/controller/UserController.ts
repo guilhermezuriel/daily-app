@@ -11,28 +11,25 @@ import jwt from 'jsonwebtoken';
 const UserController = {
   async createUserController(req: Request, res: Response) {
     try {
-      /* const createUserBodySchema = z.object({
-        name: z.string(),
-        email: z.string().refine((email) => /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email ?? ""), 'Invalid email'),
-        password: z.string().refine((password) => /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/.test(password ?? ''), 'Password must have minimum eight characters, at least one uppercase,one lower case, one number and special character'),
-      }) */
       const { name, email, password }: User = req.body;
-      validateCreation('email', email);
-      validateCreation('password', email);
       const UserExists = await kknex('users').where('email', email).select('*');
-      if (UserExists) {
-        return new BadRequestError('O Email já está cadastrado');
+
+      validateCreation('email', email);
+      validateCreation('password', password);
+
+      if (UserExists.length > 0) {
+        const error = new BadRequestError('O Email já está cadastrado')
+        return res.status(error.statusCode).send(error.message);
       }
-      //Utilizar bcrypt ou criar algoritmo de hash com node:crypto ? :: Criar algoritmo com node:crypto
       const passwordHash = await bcrypt.hash(password, 10);
-      const newUser = await kknex('users').insert({
+      await kknex('users').insert({
         id: randomUUID(),
         name,
         email,
         password: passwordHash,
         accept_rate: null
       })
-      return res.status(201).send({ newUser })
+        return res.status(201).send('Cadastro realizado com sucesso')
     } catch (err) {
       console.log('createUserContoller >>>', err)
     }
@@ -40,10 +37,14 @@ const UserController = {
   async loginUserController(req: Request, res: Response) {
     try {
       const { email, password } = req.body;
-      const user: any = await kknex('users').where('email', email).select('*');
+
+      const [user]: any = await kknex('users').where('email', email).select('*');
       if (!user) return new BadRequestError('Email ou senha inválidos');
+
       const verifyPassword = await bcrypt.compare(password, user.password);
       if (!verifyPassword) return new BadRequestError('Email ou senha inválidos')
+      //Needs to generate token
+      return res.status(200).send('Usuário Logado');
     } catch (err) {
       console.log('loginUserController >>>', err)
     }

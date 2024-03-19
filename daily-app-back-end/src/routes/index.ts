@@ -4,7 +4,7 @@ import { Router} from "express";
 
 const routes = Router();
 
-routes.use('/users',CreateUserRouter)
+routes.use('/user',CreateUserRouter)
 
 
 export default routes
