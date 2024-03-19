@@ -29,7 +29,7 @@ const UserController = {
         password: passwordHash,
         accept_rate: null
       })
-        return res.status(201).send('Cadastro realizado com sucesso')
+      return res.status(201).send('Cadastro realizado com sucesso')
     } catch (err) {
       console.log('createUserContoller >>>', err)
     }
@@ -43,10 +43,18 @@ const UserController = {
 
       const verifyPassword = await bcrypt.compare(password, user.password);
       if (!verifyPassword) return new BadRequestError('Email ou senha inválidos')
+      const token = jwt.sign({ id: user.id }, process.env.JWT_PASS ?? '', { expiresIn: 60 * 60 * 24 * 7 });//7 days
+      const { password: _, ...userLogin } = user;
       //Needs to generate token
-      return res.status(200).send('Usuário Logado');
+      return res.json({ user: userLogin, token: token });
     } catch (err) {
       console.log('loginUserController >>>', err)
+    }
+  },
+  async getUserProfileController(req: Request, res: Response) {
+    const { authorization } = req.headers;
+    if (!authorization) {
+      throw new Error('Unathourized Error');
     }
   },
   async getUserController(req: Request, res: Response) {

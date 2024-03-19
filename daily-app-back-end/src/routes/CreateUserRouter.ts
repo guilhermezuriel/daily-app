@@ -7,8 +7,7 @@ const route = Router();
 
 route.post('/create', UserController.createUserController);
 route.get('/', UserController.listAllUsersController);
-
-// route.post'/login/:id', UserController.getUserController);
+route.get('/profile', UserController.getUserProfileController);
 route.post('/login', UserController.loginUserController);
 
 export default route;
