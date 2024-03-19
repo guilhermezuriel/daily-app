@@ -9,6 +9,7 @@ import { validateCreation } from "../helpers/validate-creation";
 import jwt from 'jsonwebtoken';
 
 const UserController = {
+  //Create User
   async createUserController(req: Request, res: Response) {
     try {
       //Importar novamente biblioteca ZOD -> LEMBRAR
@@ -35,27 +36,27 @@ const UserController = {
       console.log('createUserContoller >>>', err)
     }
   },
+  //Get User Profile
   async getUserProfileController(req: Request, res: Response) {
     return res.status(200).send(req.user)
   },
-  async getUserController(req: Request, res: Response) {
-    try {
-      const getUserParamsSchema = z.object({
-        id: z.string().uuid()
-      })
-      const { id } = getUserParamsSchema.parse(req.params);
-      const user = await kknex('users').where('id', id).select('*')
-      return res.status(200).send(user)
-    } catch (err) {
-      console.log('getUserController >>>> ', err)
-    }
-  },
+  //DEVELOPMENT: LIST ALL USERS
   async listAllUsersController(req: Request, res: Response) {
     try {
       const user = await kknex('users').select('*')
       return res.send(user)
     } catch (err) {
       console.log(err)
+    }
+  },
+  async deleteUserController(req:Request, res:Response){
+    try{
+      const user = req.user;
+      if(!user)return new Error('Unathourized Error');
+      //NEED TO TEST QUERY ---- DELETE USER AND HIS REFS
+      await kknex('users').where('id', user.id).join('users','users.id','refs.user_id').del()
+    }catch(err){
+      console.log('deleteUserController >>>>', err)
     }
   }
 
