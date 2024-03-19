@@ -4,6 +4,7 @@ import { kknex } from "../database";
 import { BadRequestError } from "../helpers/api-errors";
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
+import 'dotenv/config'
 
 export const LoginController = {
   async loginUserController(req: Request, res: Response) {
@@ -18,7 +19,7 @@ export const LoginController = {
       const token = jwt.sign({ id: user.id }, process.env.JWT_PASS ?? '', { expiresIn: 60 * 60 * 24 * 7 });//7 days
       //CODE (STORE TOKEN ON LOCALSTORAGE OR COOKIES)
       const { password: _, ...userLogin } = user;
-      return res.json({ user: userLogin });
+      return res.json({ user: userLogin, token:token });
     } catch (err) {
       console.log('loginUserController >>>', err)
     }

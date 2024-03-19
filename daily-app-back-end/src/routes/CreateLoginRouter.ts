@@ -5,6 +5,6 @@ import { verifyJWT } from "../middleware/verifyJWT";
 
 const route = Router();
 
-route.post('/', verifyJWT, LoginController.loginUserController);
+route.post('/', LoginController.loginUserController);
 
 export default route;
