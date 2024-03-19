@@ -17,7 +17,8 @@
 - Nome
 - Descrição
 - Data e Hora
-- Está dentro da dieta
+- Está dentro da dieta -> Adicionar ao banco de dados:
+  yarn run knex -- migrate:make create_isDiet_column
 
 ### CRUD refeição [ ]
 
