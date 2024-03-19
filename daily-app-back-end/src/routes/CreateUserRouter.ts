@@ -10,6 +10,6 @@ route.get('/', UserController.listAllUsersController);
 route.post('/create', UserController.createUserController);
 route.get('/profile', verifyJWT, UserController.getUserProfileController);
 route.delete('/delete', verifyJWT, UserController.deleteUserController);
-
+route.get('/refs', verifyJWT, UserController.listAllUserRefs);
 
 export default route;
