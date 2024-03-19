@@ -3,7 +3,7 @@ import { z } from 'zod'
 import { kknex } from "../database";
 import { randomUUID } from 'node:crypto';
 import { BadRequestError } from "../helpers/api-errors";
-import { User } from "../models/User.model";
+import { UserCreate} from "../models/User.model";
 import bcrypt from 'bcrypt';
 import { validateCreation } from "../helpers/validate-creation";
 import jwt from 'jsonwebtoken';
@@ -11,7 +11,8 @@ import jwt from 'jsonwebtoken';
 const UserController = {
   async createUserController(req: Request, res: Response) {
     try {
-      const { name, email, password }: User = req.body;
+      //Importar novamente biblioteca ZOD -> LEMBRAR
+      const { name, email, password }: UserCreate = req.body;
       const UserExists = await kknex('users').where('email', email).select('*');
 
       validateCreation('email', email);
@@ -34,28 +35,8 @@ const UserController = {
       console.log('createUserContoller >>>', err)
     }
   },
-  async loginUserController(req: Request, res: Response) {
-    try {
-      const { email, password } = req.body;
-
-      const [user]: any = await kknex('users').where('email', email).select('*');
-      if (!user) return new BadRequestError('Email ou senha inválidos');
-
-      const verifyPassword = await bcrypt.compare(password, user.password);
-      if (!verifyPassword) return new BadRequestError('Email ou senha inválidos')
-      const token = jwt.sign({ id: user.id }, process.env.JWT_PASS ?? '', { expiresIn: 60 * 60 * 24 * 7 });//7 days
-      const { password: _, ...userLogin } = user;
-      //Needs to generate token
-      return res.json({ user: userLogin, token: token });
-    } catch (err) {
-      console.log('loginUserController >>>', err)
-    }
-  },
   async getUserProfileController(req: Request, res: Response) {
-    const { authorization } = req.headers;
-    if (!authorization) {
-      throw new Error('Unathourized Error');
-    }
+    return res.status(200).send(req.user)
   },
   async getUserController(req: Request, res: Response) {
     try {

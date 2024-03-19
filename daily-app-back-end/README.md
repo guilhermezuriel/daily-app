@@ -1,12 +1,16 @@
 ### Deve ser possível criar um usuário [ X ]
 
 ### Dever ser possível identificar o usuário entre as requisições [ ]
-- Criar token após realizar o login
-- Expira em 5 dias
-- SessionId necessário para realizar CRUD nas refeições -> Confirmar que o usuário esteja logado
-- Acrescentar no banco de dados das refs o id do user
-- Autentificação com JWT
-- Finalizar rota POST user/login/:id
+
+- Criar token após realizar o login [FEITO]
+- Expira em 5 dias [FEITO]
+- Autentificação com JWT [FEITO]
+- Finalizar rota POST user/login/:id [FEITO]
+- Armazenar token no LocalStorage ou em Cookies ? []
+
+### Deve ser possível um usuário remover sua conta [ ]
+
+- Necessário fazer login + token
 
 ### Deve ser possível registrar uma refeição feita[ ] :
 
@@ -16,6 +20,9 @@
 - Está dentro da dieta
 
 ### CRUD refeição [ ]
+
+- necessário para realizar CRUD nas refeições -> Confirmar que o usuário esteja logado
+- Acrescentar no banco de dados das refs o id do user
 
 ### Deve ser possível visualizar todas as refeições de um usuário [ ]
 
