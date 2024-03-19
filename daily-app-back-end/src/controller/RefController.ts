@@ -36,7 +36,22 @@ const RefController = {
       console.log('getRefController >>>>>', err)
     }
   },
-  
+  //need to test
+  async updateRefController(req: Request, res: Response){
+    try{
+      const user = req.user
+      const {id, ...changes} = req.body;
+      const [ref] = await kknex('refs').where({id:id, user_id:user.id}).select('*');
+      if(!ref){
+        return new BadRequestError('Ref does not exist');
+      }
+      await kknex('refs').where({id:id, user_id:user.id}).update({
+
+      })
+    }catch(err){
+      console.log('updateRefController >>>>', err)
+    }
+  }
 }
 
 export default RefController
