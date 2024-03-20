@@ -52,9 +52,11 @@ const UserController = {
   async deleteUserController(req:Request, res:Response){
     try{
       const user = req.user;
-      if(!user)return new Error('Unathourized Error');
+      if(!user) return new Error('Unathourized Error');
       //NEED TO TEST QUERY ---- DELETE USER AND HIS REFS
-      await kknex('users').where('id', user.id).join('users','users.id','refs.user_id').del()
+      await kknex('refs').where('user_id', user.id).del()
+      await kknex('users').where('id', user.id).del()
+      return res.send('O usuário foi removido')
     }catch(err){
       console.log('deleteUserController >>>>', err)
     }
