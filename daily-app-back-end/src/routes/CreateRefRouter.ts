@@ -6,6 +6,8 @@ import { verifyJWT } from "../middleware/verifyJWT";
 const route = Router();
 
 route.post('/', RefController.createRefController);
+route.get('/', RefController.listAllRefs);
+
 route.get('/:id', RefController.getRefController)
 route.put('/:id/edit', RefController.updateRefController)
 
