@@ -73,6 +73,16 @@ const UserController = {
     }catch(err){
       console.log('listAllUserRefs >>>>>', err)
     }
+  },
+  async loadUserMetrics(req:Request, res: Response){
+    try{
+      const user = req.user;
+      const [total] = await kknex('refs').count('id').where('user_id', user.id);
+      const [onDiet] = await kknex('refs').count({is_Diet:true}).where('user_id', user.id);
+      const onDiet_rate = 0;
+    }catch(err){
+      console.log('loadUserMetrics >>>', err)
+    }
   }
 }
 
