@@ -12,12 +12,16 @@ const UserController = {
   //Create User
   async createUserController(req: Request, res: Response) {
     try {
-      //Importar novamente biblioteca ZOD -> LEMBRAR
-      const { name, email, password }: UserCreate = req.body;
+      const userSchema = z.object({
+        name: z.string(),
+        email: z.string().refine((email)=>/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email??""), new BadRequestError('Email inválido')),
+        password: z.string().refine((password)=> /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/.test(password??""),new BadRequestError('Password must have minimum eight characters, at least one uppercase,one lower case, one number and special character'))
+      })
+      const { name, email, password } = userSchema.parse(req.body);
       const UserExists = await kknex('users').where('email', email).select('*');
 
-      validateCreation('email', email);
-      validateCreation('password', password);
+     // validateCreation('email', email);
+     // validateCreation('password', password);
 
       if (UserExists.length > 0) {
         const error = new BadRequestError('O Email já está cadastrado')

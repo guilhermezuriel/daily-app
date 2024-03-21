@@ -8,10 +8,15 @@ const RefController = {
   //need to test
   async createRefController(req:Request, res: Response){
     try{
+      const refSchema = z.object({
+        name:z.string(),
+        type:z.enum(['breakfast','lunch','dinner']),
+        is_Diet: z.boolean()
+      })
       const user = req.user;
       if(!user) return new Error('Unathourized Error');
       //CODE (Validação de tipagem com zod)
-      const {name, type, is_Diet} = req.body;
+      const {name, type, is_Diet} = refSchema.parse(req.body);
       const date = new Date().toLocaleString('en-GB');
       const ref = await kknex('refs').insert({
         id:randomUUID(),
