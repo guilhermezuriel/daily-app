@@ -77,9 +77,16 @@ const UserController = {
   async loadUserMetrics(req:Request, res: Response){
     try{
       const user = req.user;
-      const [total] = await kknex('refs').count('id').where('user_id', user.id);
-      const [onDiet] = await kknex('refs').count({is_Diet:true}).where('user_id', user.id);
-      const onDiet_rate = 0;
+      const [{total}] = await kknex('refs').count('* as total').where('user_id', user.id);
+      const [{onDiet}] = await kknex('refs').count('* as onDiet').where({user_id:user.id,is_Diet:true });
+      const [{notDiet}] = await kknex('refs').count('* as notDiet').where({user_id:user.id,is_Diet:false })
+      const diet_rate = (Number(onDiet)/Number(total))
+      return res.status(200).send({
+        total, 
+        onDiet,
+        notDiet,
+        diet_rate
+      })
     }catch(err){
       console.log('loadUserMetrics >>>', err)
     }
