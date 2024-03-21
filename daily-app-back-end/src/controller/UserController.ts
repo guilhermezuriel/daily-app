@@ -28,8 +28,7 @@ const UserController = {
         id: randomUUID(),
         name,
         email,
-        password: passwordHash,
-        accept_rate: null
+        password: passwordHash
       })
       return res.status(201).send('Cadastro realizado com sucesso')
     } catch (err) {
