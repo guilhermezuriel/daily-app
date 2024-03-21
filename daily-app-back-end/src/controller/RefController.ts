@@ -38,11 +38,11 @@ const RefController = {
   //need to test
   async getRefController(req:Request, res: Response){
     try{
-      const {id} = req.query;
       const user = req.user;
+      const {id} = req.params;
       const ref = await kknex('refs').where({id:id, user_id:user.id}).select('*')
       if(!ref) return new BadRequestError('Ref does not exist');
-      return res.send(ref);
+      return res.send({ref});
     }catch(err){
       console.log('getRefController >>>>>', err)
     }
@@ -50,19 +50,34 @@ const RefController = {
   //need to test
   async updateRefController(req: Request, res: Response){
     try{
-      const user = req.user
-      const {id, ...changes} = req.body;
-      const [ref] = await kknex('refs').where({id:id, user_id:user.id}).select('*');
-      if(!ref){
+      const user = req.user;
+      const ref = req.params;
+      const {id, user_id,...changes} = req.body;
+      const [editedRef] = await kknex('refs').where({id:ref.id, user_id:user.id}).select('*');
+      if([editedRef].length < 0){
         return new BadRequestError('Ref does not exist');
       }
-      await kknex('refs').where({id:id, user_id:user.id}).update({
-
+      const attRef = await kknex('refs').where({id:ref.id, user_id:user.id}).update({
+        ...changes
       })
+      return res.status(200).send('Refeição atualizada com sucesso')
     }catch(err){
       console.log('updateRefController >>>>', err)
     }
-  }
+  },
+  async getSameTypeRefs(req:Request, res:Response){
+    const user  = req.user;
+    const {type} = req.query;
+    const filter = await kknex('refs').where({user_id:user.id, type:type}).select('*')
+    return res.status(200).send({filter})
+  },
+  async deleteRefControllerc(req:Request, res:Response){
+    try{
+      //CODE
+    }catch(err){
+      console.log('deleteRefController >>> ', err)
+    }
+  } 
 }
 
 export default RefController

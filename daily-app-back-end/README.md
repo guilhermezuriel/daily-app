@@ -8,11 +8,11 @@
 - Finalizar rota POST user/login/:id [FEITO]
 - Armazenar token no LocalStorage ou em Cookies ? []
 
-### Deve ser possível um usuário remover sua conta [ ]
+### Deve ser possível um usuário remover sua conta [X]
 
 - Necessário fazer login + token
 
-### Deve ser possível registrar uma refeição feita[ ] :
+### Deve ser possível registrar uma refeição feita[X] :
 
 - Nome
 - Descrição
@@ -20,14 +20,14 @@
 - Está dentro da dieta -> Adicionar ao banco de dados:
   yarn run knex -- migrate:make create_isDiet_column
 
-### CRUD refeição [ ]
+### CRUD refeição [x]
 
 - necessário para realizar CRUD nas refeições -> Confirmar que o usuário esteja logado
 - Acrescentar no banco de dados das refs o id do user
 
-### Deve ser possível visualizar todas as refeições de um usuário [ ]
+### Deve ser possível visualizar todas as refeições de um usuário [x]
 
-### Deve ser possível visualizar uma única refeição [ ]
+### Deve ser possível visualizar uma única refeição [x]
 
 ### Deve ser possível visualizar uma refeição do mesmo tipo [ ]
 
