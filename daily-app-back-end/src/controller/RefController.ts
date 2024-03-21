@@ -35,7 +35,6 @@ const RefController = {
       console.log('list All Refs >>>>', err)
     }
   },
-  //need to test
   async getRefController(req:Request, res: Response){
     try{
       const user = req.user;
@@ -47,7 +46,6 @@ const RefController = {
       console.log('getRefController >>>>>', err)
     }
   },
-  //need to test
   async updateRefController(req: Request, res: Response){
     try{
       const user = req.user;
@@ -71,9 +69,12 @@ const RefController = {
     const filter = await kknex('refs').where({user_id:user.id, type:type}).select('*')
     return res.status(200).send({filter})
   },
-  async deleteRefControllerc(req:Request, res:Response){
+  async deleteRefController(req:Request, res:Response){
     try{
-      //CODE
+      const user = req.user;
+      const {id} = req.params;
+      await kknex('refs').where({id:id, user_id:user.id}).del()
+      return res.status(200).send('Usuário deletado com sucesso')
     }catch(err){
       console.log('deleteRefController >>> ', err)
     }

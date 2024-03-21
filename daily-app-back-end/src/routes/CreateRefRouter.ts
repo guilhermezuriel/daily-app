@@ -10,6 +10,7 @@ route.post('/', RefController.createRefController);
 route.get('/', RefController.listAllRefs);
 route.get('/type', RefController.getSameTypeRefs);
 route.get('/:id', RefController.getRefController);
-route.put('/:id/edit', RefController.updateRefController)
+route.delete('/:id', RefController.deleteRefController);
+route.put('/:id/edit', RefController.updateRefController);
 
 export default route;
