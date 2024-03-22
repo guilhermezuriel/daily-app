@@ -31,7 +31,7 @@
 
 ### Deve ser possível visualizar uma refeição do mesmo tipo [X]
 
-### Métricas de um usuário [ ]
+### Métricas de um usuário [X]
 
 - Quantidade total de refeições registradas
 - Quantidade total de refeições dentro da dieta
@@ -39,5 +39,3 @@
 - Melhor sequência de refeições dentro da dieta
 
 ### O usuário só pode visualizar, editar e apagar as refeições a qual ele criou [x]
-
-### Lógica do accepted_rate e das métricas do usuário

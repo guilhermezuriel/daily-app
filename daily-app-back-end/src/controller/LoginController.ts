@@ -16,7 +16,7 @@ export const LoginController = {
 
       const verifyPassword = await bcrypt.compare(password, user.password);
       if (!verifyPassword) return new BadRequestError('Email ou senha inválidos')
-      const token = jwt.sign({ id: user.id }, process.env.JWT_PASS ?? '', { expiresIn: 60 * 60 * 24 * 7 });//7 days
+      const token = jwt.sign({ id: user.id }, process.env.JWT_PASS ?? '', { expiresIn: "7d" });
       //CODE (STORE TOKEN ON LOCALSTORAGE OR COOKIES)
       const { password: _, ...userLogin } = user;
       return res.json({ user: userLogin, token:token });
