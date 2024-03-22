@@ -18,14 +18,21 @@ export const LoginController = {
       if (!verifyPassword) return new BadRequestError('Email ou senha inválidos')
       const token = jwt.sign({ id: user.id }, process.env.JWT_PASS ?? '', { expiresIn: "7d" });
 
-      res.cookie('jwt', token, {httpOnly:true, maxAge: 1000 * 60 * 60 * 24 });
+      res.cookie('userToken', token, {httpOnly:true, maxAge: 1000 * 60 * 60 * 24, secure:true});
       //CODE (STORE TOKEN ON LOCALSTORAGE OR COOKIES)
       const { password: _, ...userLogin } = user;
-      return res.json({ user: userLogin, token:token });
+      return res.json({ user: userLogin});
     } catch (err) {
       console.log('loginUserController >>>', err)
     }
   },
-  
+  async logoutUserController(req:Request, res:Response){
+    try{
+        res.clearCookie('userToken',{ secure: true, httpOnly: true });
+        return res.redirect(302, '/')
+    }catch(err){
+
+    }
+  }
 
 }
