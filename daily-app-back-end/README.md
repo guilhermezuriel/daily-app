@@ -37,7 +37,7 @@
 
 ### O usuário só pode visualizar, editar e apagar as refeições a qual ele criou [x]
 
-### Req.cookies armazenar token [ ]
+### Res.cookies armazenar token [ ]
 
 ### Rota de recuperação de senha [ ]
 

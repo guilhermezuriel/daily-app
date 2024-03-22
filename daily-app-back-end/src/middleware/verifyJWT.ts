@@ -7,12 +7,13 @@ type JwtPayload = {
 }
 
 export async function verifyJWT(req:Request, res:Response, next:NextFunction){
-  const { authorization } = req.headers;
+  //Need to TEST
+  const  authorization  = req.cookies;
   if (!authorization) {
     throw new Error('Unathourized Error');
   }
   //Validating the token
-  const token = authorization.split(' ')[1];
+  const token = authorization.token;
   const {id} = jwt.verify(token,process.env.JWT_PASS ?? '' ) as JwtPayload;
   const [user] = await kknex('users').where('id', id).select('*');
   if(!user){
