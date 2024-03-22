@@ -6,11 +6,8 @@
 - Expira em 5 dias [FEITO]
 - Autentificação com JWT [FEITO]
 - Finalizar rota POST user/login/:id [FEITO]
-- Armazenar token no LocalStorage ou em Cookies ? []
 
 ### Deve ser possível um usuário remover sua conta [X]
-
-- Necessário fazer login + token
 
 ### Deve ser possível registrar uma refeição feita[X] :
 
@@ -39,3 +36,9 @@
 - Melhor sequência de refeições dentro da dieta
 
 ### O usuário só pode visualizar, editar e apagar as refeições a qual ele criou [x]
+
+### Req.cookies armazenar token [ ]
+
+### Rota de recuperação de senha [ ]
+
+### Rota de Logout [ ]
