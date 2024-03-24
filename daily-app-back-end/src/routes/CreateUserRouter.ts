@@ -12,4 +12,5 @@ route.get('/profile', verifyJWT, UserController.getUserProfileController);
 route.delete('/delete', verifyJWT, UserController.deleteUserController);
 route.get('/refs', verifyJWT, UserController.listAllUserRefs);
 route.get('/metrics', verifyJWT, UserController.loadUserMetrics);
+route.get('/logout', UserController.logoutUserController)
 export default route;

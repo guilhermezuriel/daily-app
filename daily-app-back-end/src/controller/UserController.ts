@@ -90,7 +90,16 @@ const UserController = {
     }catch(err){
       console.log('loadUserMetrics >>>', err)
     }
+  },
+  async logoutUserController(req:Request, res:Response){
+    try{
+        res.clearCookie('userToken',{ secure: true, httpOnly: true });
+        return res.send('O token foi')
+    }catch(err){
+        console.log('logoutUserCOntroller >>>>>', err)
+    }
   }
+
 }
 
 export default UserController

@@ -25,14 +25,5 @@ export const LoginController = {
     } catch (err) {
       console.log('loginUserController >>>', err)
     }
-  },
-  async logoutUserController(req:Request, res:Response){
-    try{
-        res.clearCookie('userToken',{ secure: true, httpOnly: true });
-        return res.redirect(302, '/')
-    }catch(err){
-
-    }
   }
-
 }

@@ -10,5 +10,4 @@ routes.use('/login', CreateLoginRouter)
 routes.use('/user',CreateUserRouter)
 routes.use('/ref',verifyJWT, CreateRefRouter )
 
-
 export default routes
