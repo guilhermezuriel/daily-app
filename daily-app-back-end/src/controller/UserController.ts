@@ -3,10 +3,7 @@ import { z } from 'zod';
 import { kknex } from '../database';
 import { randomUUID } from 'node:crypto';
 import { BadRequestError, UnathourizedError } from '../helpers/api-errors';
-import { UserCreate } from '../models/User.model';
 import bcrypt from 'bcrypt';
-import { validateCreation } from '../helpers/validate-creation';
-import jwt from 'jsonwebtoken';
 
 const UserController = {
   //Create User
