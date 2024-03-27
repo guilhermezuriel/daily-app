@@ -6,7 +6,7 @@ import { BadRequestError, UnathourizedError } from '../helpers/api-errors';
 import bcrypt from 'bcrypt';
 
 const UserController = {
-  //Create User
+  //POST
   async createUserController(req: Request, res: Response) {
     try {
       const userSchema = z.object({
@@ -51,7 +51,7 @@ const UserController = {
       console.log('createUserContoller >>>', err);
     }
   },
-  //Get User Profile
+  //GET
   async getUserProfileController(req: Request, res: Response) {
     return res.status(200).send(req.user);
   },
@@ -64,6 +64,7 @@ const UserController = {
       console.log(err);
     }
   },
+  //DELETE
   async deleteUserController(req: Request, res: Response) {
     try {
       const user = req.user;
@@ -78,7 +79,7 @@ const UserController = {
       console.log('deleteUserController >>>>', err);
     }
   },
-  //Need to test
+  //GET
   async listAllUserRefs(req: Request, res: Response) {
     try {
       const user = req.user;
@@ -90,6 +91,7 @@ const UserController = {
       console.log('listAllUserRefs >>>>>', err);
     }
   },
+  //GET
   async loadUserMetrics(req: Request, res: Response) {
     try {
       const user = req.user;
@@ -113,6 +115,7 @@ const UserController = {
       console.log('loadUserMetrics >>>', err);
     }
   },
+  //GET
   async logoutUserController(req: Request, res: Response) {
     try {
       res.clearCookie('userToken', { secure: true, httpOnly: true });

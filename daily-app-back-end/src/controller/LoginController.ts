@@ -7,6 +7,7 @@ import jwt from 'jsonwebtoken';
 import 'dotenv/config';
 
 export const LoginController = {
+  //POST
   async loginUserController(req: Request, res: Response) {
     try {
       const { email, password } = req.body;

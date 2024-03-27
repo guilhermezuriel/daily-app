@@ -5,7 +5,7 @@ import { randomUUID } from 'node:crypto';
 import { BadRequestError, UnathourizedError } from '../helpers/api-errors';
 
 const RefController = {
-  //need to test
+  //POST
   async createRefController(req: Request, res: Response) {
     try {
       const refSchema = z.object({
@@ -16,7 +16,6 @@ const RefController = {
       const user = req.user;
       if (!user)
         return new UnathourizedError('O usuário precisa realizar login');
-      //CODE (Validação de tipagem com zod)
       const { name, type, is_Diet } = refSchema.parse(req.body);
       const date = new Date().toLocaleString('en-GB');
       const ref = await kknex('refs').insert({
@@ -32,6 +31,7 @@ const RefController = {
       console.log('postRefController >>>', err);
     }
   },
+  //GET
   async listAllRefs(req: Request, res: Response) {
     try {
       const user = req.user;
@@ -41,6 +41,7 @@ const RefController = {
       console.log('list All Refs >>>>', err);
     }
   },
+  //GET
   async getRefController(req: Request, res: Response) {
     try {
       const user = req.user;
@@ -54,6 +55,7 @@ const RefController = {
       console.log('getRefController >>>>>', err);
     }
   },
+  //PUT
   async updateRefController(req: Request, res: Response) {
     try {
       const user = req.user;
@@ -75,6 +77,7 @@ const RefController = {
       console.log('updateRefController >>>>', err);
     }
   },
+  //GET
   async getSameTypeRefs(req: Request, res: Response) {
     const user = req.user;
     const { type } = req.query;
@@ -83,6 +86,7 @@ const RefController = {
       .select('*');
     return res.status(200).send({ filter });
   },
+  //DELETE
   async deleteRefController(req: Request, res: Response) {
     try {
       const user = req.user;
