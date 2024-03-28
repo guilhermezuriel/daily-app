@@ -17,7 +17,7 @@ const RefController = {
       if (!user)
         return new UnathourizedError('O usuário precisa realizar login');
       const { name, type, is_Diet } = refSchema.parse(req.body);
-      const date = new Date().toLocaleString('en-GB');
+      const date = new Date();
       const ref = await kknex('refs').insert({
         id: randomUUID(),
         user_id: user.id,
